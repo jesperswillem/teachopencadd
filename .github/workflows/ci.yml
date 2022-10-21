@@ -10,8 +10,8 @@ on:
       - "master"
       - "maintenance/.+"
   schedule:
-    # Run a cron job once daily, weekdays only
-    - cron: "0 3 * * 1-5"
+    # Run a cron job once weekly on Monday
+    - cron: "0 3 * * 1"
 
 jobs:
   test:
@@ -22,13 +22,13 @@ jobs:
       matrix:
         cfg:
           - os: ubuntu-latest
-            python-version: "3.7"
+            python-version: "3.8"
           - os: ubuntu-latest
             python-version: "3.9"
           - os: macos-latest
-            python-version: "3.7"
+            python-version: "3.8"
           - os: windows-latest
-            python-version: "3.7"
+            python-version: "3.8"
 
     env:
       PYVER: ${{ matrix.cfg.python-version }}
@@ -40,6 +40,9 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           python-version: ${{ matrix.cfg.python-version }}
+          mamba-version: "*"
+          # Uncomment next line if you are running the tests locally via https://github.com/nektos/act
+          #miniconda-version: "latest"
           activate-environment: teachopencadd
           channel-priority: true
           environment-file: devtools/test_env.yml
@@ -66,7 +69,8 @@ jobs:
       - name: Test CLI
         shell: bash -l {0}
         run: |
-          teachopencadd
+          teachopencadd -h
+          pytest -v --cov=${PACKAGE} --cov-report=xml --color=yes ${PACKAGE}/tests/
 
       - name: Run tests
         shell: bash -l {0}
@@ -75,7 +79,7 @@ jobs:
           if [ "$RUNNER_OS" != "Windows" ]; then
             pytest $PYTEST_ARGS teachopencadd/talktorials/T*/talktorial.ipynb
           else
-            pytest $PYTEST_ARGS teachopencadd/talktorials/ --ignore-glob=teachopencadd/talktorials/T019*
+            pytest $PYTEST_ARGS teachopencadd/talktorials/ --ignore=teachopencadd/talktorials/T008_md_simulation/talktorial.ipynb --ignore=teachopencadd/talktorials/T019_md_simulation/talktorial.ipynb
           fi
 
   format:
@@ -105,42 +109,3 @@ jobs:
           done
           # If the script above introduced changes (it shouldn't!), git diff will have output and an error code
           git diff --exit-code
-
-  condabuild:
-    name: Conda package
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Fetch all tags
-        shell: bash
-        run: |
-          git fetch --tags --force
-
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          python-version: 3.7
-          channel-priority: true
-          auto-activate-base: true
-          channels: conda-forge,defaults
-
-      - name: Additional info about the build
-        shell: bash
-        run: |
-          uname -a
-          df -h
-          ulimit -a
-
-      - name: Environment Information
-        shell: bash -l {0}
-        run: |
-          conda info --all
-          conda list
-
-      - name: Build package
-        shell: bash -l {0}
-        run: |
-          conda install conda-build anaconda
-          conda build devtools/conda-recipe

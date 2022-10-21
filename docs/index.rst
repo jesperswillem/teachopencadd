@@ -6,6 +6,8 @@
 TeachOpenCADD
 =============
 
+   This website is free and open to all users and there is no login requirement!
+
 Open source programming packages for cheminformatics and structural bioinformatics are powerful tools to build modular, reproducible, and reusable pipelines for computer-aided drug design (CADD). While documentation for such tools is available, only few freely accessible examples teach underlying concepts focused on CADD applications, addressing especially users new to the field.
 
 TeachOpenCADD is a teaching platform developed by students for students, which provides teaching material for central CADD topics. Since we cover both the theoretical as well as practical aspect of these topics, the platform addresses students and researchers with a biological/chemical as well as a computational background.
@@ -15,7 +17,7 @@ For each topic, an interactive Jupyter Notebook is offered, using open source pa
 .. raw:: html
 
    <p align="center">
-   <img src="_static/images/TeachOpenCADD_topics.svg" alt="TeachOpenCADD topics" width="800"/>
+   <img src="_static/images/TeachOpenCADD_topics.png" alt="TeachOpenCADD topics" width="800"/>
    <br>
    <font size="1">
    Figure adapted from Figure 1 in the TeachOpenCADD publication 
@@ -31,8 +33,8 @@ Table of contents
    :maxdepth: 1
    :caption: Our talktorials
 
-   talktorials
    all_talktorials
+   talktorials
 
 .. toctree::
    :maxdepth: 1
@@ -51,7 +53,8 @@ Table of contents
    :maxdepth: 1
    :caption: External resources
 
-   external_resources
+   external_dependencies
+   external_tutorials_collections
 
 
 Citation

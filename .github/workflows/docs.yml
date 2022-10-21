@@ -10,8 +10,8 @@ on:
       - "master"
       - "maintenance/.+"
   schedule:
-    # Run a cron job once daily, weekdays only
-    - cron: "0 3 * * 1-5"
+    # Run a cron job once weekly on Monday
+    - cron: "0 3 * * 1"
 
 jobs:
   docs:
@@ -22,7 +22,8 @@ jobs:
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          python-version: "3.7"
+          python-version: "3.8"
+          mamba-version: "*"
           activate-environment: teachopencadd
           channel-priority: true
           environment-file: devtools/test_env.yml
@@ -51,7 +52,7 @@ jobs:
         run: |
           cd docs
           make clean
-          SPHINXOPTS="-j2 -W -T --keep-going" make html
+          SPHINXOPTS="-j2 -T --keep-going" make html
           # Extra UGLY patch to fix PDF IFrame on T005
           cp talktorials/images/*.pdf _build/html/_images/
           sed -i 's|src="images/butina_full.pdf"|src="../_images/butina_full.pdf"|g' \
@@ -72,8 +73,9 @@ jobs:
             --exclude "http[s]://quora.com" \
             --exclude "http[s]://doi.org" \
             --exclude "ftp://*" \
-            --exclude "http://localhost:8000"
-
+            --exclude "http://localhost:8000" \
+            --exclude "https://pubs.acs.org/doi/10.1021/acs.jcim.9b00662" \
+            --exclude "https://pubs.acs.org/doi/abs/10.1021/bk-2021-1387.ch010"
 
       - name: Check 404s (README)
         uses: gaurav-nelson/github-action-markdown-link-check@v1

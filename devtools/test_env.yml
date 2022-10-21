@@ -1,53 +1,58 @@
 ﻿name: teachopencadd
 channels:
   - conda-forge
+  - defaults
 dependencies:
-  - python>=3.7
+  - python>=3.8
   - pip
   - jupyter
   - jupyterlab>=3
+  - nglview>=3
+  # https://github.com/volkamerlab/teachopencadd/issues/262
+  - ipywidgets<8
   # Explicitly add numpy because of https://github.com/volkamerlab/teachopencadd/issues/150
   - numpy
-  - rdkit>=2021.03
   - scikit-learn
-  - biopandas
+  # API changed after v2.6, see https://github.com/volkamerlab/teachopencadd/issues/265
+  - tensorflow<=2.6
   - seaborn
-  - pypdb
-  - requests-cache
-  - chembl_webresource_client
-  - nglview
-  - requests
-  - openbabel
-  - tqdm
-  - lxml
+  - matplotlib-venn
   # Remove jsonschema once this issue is fixed: https://github.com/Yelp/bravado/issues/478
   - jsonschema<4.0.0
   - bravado
+  - requests
+  - requests-cache
+  - redo
+  - suds-community
   - beautifulsoup4
-  - ipywidgets>=7.5
-  - nglview>=3
-  - biotite
-  - mdanalysis>=1.0.0
-  - plip
+  - chembl_webresource_client
+  - pypdb
   - biopython<=1.77
-  - mdtraj
-  - openmm
+  - biopandas
+  - rdkit==2021.09.5
+  - openbabel
   - opencadd
+  - biotite>=0.34.0
+  - smina
+  - mdanalysis>=1.0.0
+  - mdtraj
+  - plip
+  - openmm
   # depends on openff-toolkit->ambertools -> not available on Windows yet!
   # - openmmforcefields
   - pdbfixer
-  - redo
-  - requests-cache
-  - suds-community
-  - tensorflow>=2.0
-  - smina
-  - matplotlib-venn
+  - tqdm
+  - lxml
+  - kissim
   ## CI tests
   # Workaround for https://github.com/computationalmodelling/nbval/issues/153
   - pytest 5.*
   - pytest-xdist
+  - pytest-cov
   - nbval
   - shyaml
+  # Workaround for https://github.com/sphinx-doc/sphinx/issues/10289
+  - jinja2==3.0.3
   ## Docs
   - sphinx
   - sphinx-material
@@ -57,9 +62,11 @@ dependencies:
   - sphinx-copybutton
   - sphinx-gallery
   - autodocsumm
+  ## temporary fix for rdkit on MacOS
+  - fontconfig==2.13.1
   - pip:
       - black-nb
       - nbsphinx-link
-      - https://github.com/jaimergp/autodocktools-prepare-py3k/archive/master.zip
+      - sphinxext-opengraph
       # TeachOpenCADD itself
       - ../

@@ -23,7 +23,14 @@ This is the complete list of talktorials available for online reading. Take into
    talktorials/T015_protein_ligand_docking.nblink
    talktorials/T016_protein_ligand_interactions.nblink
    talktorials/T017_advanced_nglview_usage.nblink
+   talktorials/T018_automated_cadd_pipeline.nblink
    talktorials/T019_md_simulation.nblink
    talktorials/T020_md_analysis.nblink
    talktorials/T021_one_hot_encoding.nblink
    talktorials/T022_ligand_based_screening_neural_network.nblink
+   talktorials/T023_what_is_a_kinase.nblink
+   talktorials/T024_kinase_similarity_sequence.nblink
+   talktorials/T025_kinase_similarity_kissim.nblink
+   talktorials/T026_kinase_similarity_ifp.nblink
+   talktorials/T027_kinase_similarity_ligand_profile.nblink
+   talktorials/T028_kinase_similarity_compare_perspectives.nblink
